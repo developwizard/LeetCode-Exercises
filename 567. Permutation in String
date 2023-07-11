@@ -33,3 +33,38 @@ class Solution {
         return false;
     }
 }
+
+// With HashSet
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        Map<Character, Integer> mapS1CharFreq = new HashMap<>();
+        for(int i = 0; i < s1.length(); i++) {
+            mapS1CharFreq.putIfAbsent(s1.charAt(i), 0);
+            mapS1CharFreq.put(s1.charAt(i), mapS1CharFreq.get(s1.charAt(i)) + 1);
+        }
+
+        for(int i = 0; i <= s2.length() - s1.length(); i++) {
+            Map<Character, Integer> mapS2CharFreq = new HashMap<>();
+            for (int j = i; j < i + s1.length(); j++) {
+                mapS2CharFreq.putIfAbsent(s2.charAt(j), 0);
+                mapS2CharFreq.put(s2.charAt(j), mapS2CharFreq.get(s2.charAt(j)) + 1);
+            }
+            if (matches(mapS1CharFreq, mapS2CharFreq)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    
+    private boolean matches(Map<Character, Integer> s1map, Map<Character, Integer> s2map) {
+        for (Character c : s1map.keySet()) {
+            if (!s2map.containsKey(c) || !s1map.get(c).equals(s2map.get(c))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
