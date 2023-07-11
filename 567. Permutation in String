@@ -79,5 +79,37 @@ class Solution {
     }
 }
 /*------------------------------------------------------------------------------------------------------------*/
+// Sliding window approach
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        if (s1.length() > s2.length()) {
+            return false;
+        }
 
+        int[] s1CharFreq = new int[26];
+        int[] s2CharFreq = new int[26];
+
+        for (int i = 0; i < s1.length(); i++) {
+            s1CharFreq[s1.charAt(i) - 'a']++;
+            s2CharFreq[s2.charAt(i) - 'a']++;
+        }
+        if(Arrays.equals(s1CharFreq, s2CharFreq)) {
+            return true;
+        }
+
+        int leftBound = 0;
+        int rightBound = s1.length();
+        while(rightBound < s2.length()) {  
+            s2CharFreq[s2.charAt(leftBound) - 'a']--;
+            s2CharFreq[s2.charAt(rightBound) - 'a']++;
+
+            if(Arrays.equals(s1CharFreq, s2CharFreq)) {
+                return true;
+            }
+            leftBound++;
+            rightBound++;
+        }
+        return false;
+    }
+}
 
