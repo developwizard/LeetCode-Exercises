@@ -16,11 +16,15 @@ Input: s1 = "adc", s2 = "dcda"
 Output: true
 
 
+Example 3:
+Input: s1 = "ab", s2 = "a"
+Output: false
+
 // With Array Sort
 class Solution {
     public boolean checkInclusion(String s1, String s2) {
         if (s1.length() > s2.length()) {
-            return true;
+            return false;
         }
         char[] arr1 = s1.toCharArray();
         Arrays.sort(arr1);
@@ -36,12 +40,12 @@ class Solution {
         return false;
     }
 }
-
+/*------------------------------------------------------------------------------------------------------------*/
 // With HashSet
 class Solution {
     public boolean checkInclusion(String s1, String s2) {
         if (s1.length() > s2.length()) {
-            return true;
+            return false;
         }
         Map<Character, Integer> mapS1CharFreq = new HashMap<>();
         for(int i = 0; i < s1.length(); i++) {
@@ -74,5 +78,6 @@ class Solution {
         return true;
     }
 }
+/*------------------------------------------------------------------------------------------------------------*/
 
 
