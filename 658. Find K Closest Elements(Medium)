@@ -21,6 +21,10 @@
     Example 4:
     Input: arr = [1,1,1,10,10,10], k = 1, x = 9
     Output: [10]
+    
+    Example 5:
+    Input: arr = [1,2,5,5,6,6,7,7,8,9], k = 7, x = 7
+    Output: [5,5,6,6,7,7,8]
 */
 
 // With Linked List
@@ -60,6 +64,28 @@ class Solution {
         List<Integer> list = new ArrayList<>(k);
         for (int i = left; i <= right; i++) {
             list.add(arr[i]);
+        }
+        return list;
+    }
+}
+
+// With Priority Queue
+class Solution {
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for (int el: arr) {
+            if (k > 0) {
+                pq.add(el);
+                k--;
+            } else if (!pq.isEmpty() && Math.abs(pq.peek() - x) > Math.abs(el - x)){
+                pq.poll();
+                pq.add(el);
+            }
+        }
+
+        List<Integer> list = new ArrayList<>(k);
+        while (!pq.isEmpty()) {
+            list.add(pq.poll());
         }
         return list;
     }
