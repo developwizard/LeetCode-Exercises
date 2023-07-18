@@ -50,3 +50,23 @@ class Solution {
         }
     }
 }
+
+// With Stack
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        TreeNode currNode = root;
+        Stack<TreeNode> stack = new Stack<>();
+
+        while(currNode != null || !stack.isEmpty()) {
+            while(currNode != null) {
+                stack.push(currNode);
+                currNode = currNode.left;
+            }
+            currNode = stack.pop();
+            res.add(currNode.val);
+            currNode = currNode.right;
+        }
+        return res;
+    }
+}
