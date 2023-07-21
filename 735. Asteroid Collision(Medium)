@@ -1,0 +1,37 @@
+/*
+  Task: We are given an array asteroids of integers representing asteroids in a row.
+  For each asteroid, the absolute value represents its size, and the sign represents its direction (positive meaning right, negative meaning left). 
+  Each asteroid moves at the same speed. Find out the state of the asteroids after all collisions. 
+  If two asteroids meet, the smaller one will explode. If both are the same size, both will explode. Two asteroids moving in the same direction will never meet.
+*/
+
+// Stack solution
+class Solution {
+    public int[] asteroidCollision(int[] asteroids) {
+        Stack<Integer> stack = new Stack<>();
+        for (int asteroid: asteroids) {
+            if (stack.isEmpty()) {
+                stack.push(asteroid);
+                continue;
+            }
+            boolean asteroidExplode = false;
+            if (stack.peek() > 0 && asteroid < 0) {
+                while (!stack.empty() && stack.peek() > 0) {
+                    if (stack.peek() + asteroid < 0) {
+                        stack.pop();
+                        continue;
+                    } else if (stack.peek() + asteroid == 0) {
+                        stack.pop();
+                    }
+                    asteroidExplode = true;
+                    break;
+                }
+            }
+            if (!asteroidExplode){
+                stack.push(asteroid);
+            }
+        }
+
+        return stack.stream().mapToInt(i->i).toArray();
+    }
+}
