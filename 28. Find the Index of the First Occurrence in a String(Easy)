@@ -13,6 +13,7 @@
   Explanation: "leeto" did not occur in "leetcode", so we return -1.
 */
 
+// With in-build java methods 
 class Solution {
     public int strStr(String haystack, String needle) {
         if (needle.length() > haystack.length()) {
@@ -20,5 +21,30 @@ class Solution {
         }
 
         return haystack.indexOf(needle);
+    }
+}
+
+// With loops
+class Solution {
+    public int strStr(String haystack, String needle) {
+        if (needle.length() > haystack.length()) {
+            return -1;
+        }
+
+        boolean equals = false;
+        for(int i = 0; i <= haystack.length() - needle.length(); i++) {
+            for (int j = 0; j < needle.length(); j++) {
+                if (haystack.charAt(i + j) == needle.charAt(j)) {
+                    equals = true;
+                } else {
+                    equals = false;
+                    break;
+                }
+            }
+            if (equals) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
