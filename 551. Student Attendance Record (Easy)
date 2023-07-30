@@ -43,3 +43,10 @@ class Solution {
         return true;
     }
 }
+
+// Elegant regex solution
+class Solution {
+    public boolean checkRecord(String s) {
+        return !s.matches(".*LLL.*|.*A.*A.*");
+    }
+}
