@@ -20,6 +20,7 @@
   Explanation: F(4) = F(3) + F(2) = 2 + 1 = 3.
 */
 
+// Recursive
 class Solution {
     public int fib(int n) {
         return recursion(n);
@@ -33,5 +34,24 @@ class Solution {
         }
 
         return recursion(n - 1) + recursion(n - 2);
+    }
+}
+
+// Iterative
+class Solution {
+    public int fib(int n) {
+        if (n <= 1) {
+            return n;
+        }
+
+        int prev = 0; int curr = 1;
+        while (n > 1) {
+            int temp = prev + curr;
+            prev = curr;
+            curr = temp;
+            n--;
+        }
+
+        return curr;
     }
 }
