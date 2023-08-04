@@ -16,6 +16,9 @@
   Input: root = [1,2,null,3], k = 1
   Output: 3
   Explanation: The largest level sum is 3.
+
+  Input: root = [897935,796748,528909,null,null,null,905326,706311,null,null,282251,null,139169], k = 4
+  Output: 706311
 */
 
 /**
@@ -51,5 +54,44 @@ class Solution {
         }
         
         map.put(level, map.getOrDefault(level, 0L) + node.val);
+    }
+}
+
+
+// BFS
+class Solution {
+    public long kthLargestLevelSum(TreeNode root, int k) {
+        if (root == null) {
+            return -1;
+        }
+
+        PriorityQueue<Long> pq = new PriorityQueue<>(Comparator.reverseOrder());
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
+        while(!q.isEmpty()) {
+            long sum = 0;
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = q.poll();
+                if (node.left != null) {
+                    q.offer(node.left);
+                }
+                if (node.right != null) {
+                    q.offer(node.right);
+                }
+                sum += node.val;
+            }
+
+            pq.offer(sum);
+        }
+
+        if (pq.size() < k) {
+            return -1;
+        }
+        while (k > 1 && !pq.isEmpty()) {
+            k--;
+            pq.poll();
+        }
+        return pq.peek();
     }
 }
