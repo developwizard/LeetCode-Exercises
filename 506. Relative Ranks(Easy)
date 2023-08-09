@@ -18,31 +18,61 @@
   Explanation: The placements are [1st, 5th, 3rd, 2nd, 4th].
 */
 
+//With map and priority queue
 public String[] findRelativeRanks(int[] score) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
-        for (int n: score) {
-            pq.offer(n);
+  PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
+  for (int n: score) {
+      pq.offer(n);
+  }
+  
+  HashMap<Integer, String> map = new HashMap<>();
+  int counter = 1;
+  while(!pq.isEmpty()) {
+      if (counter == 1) {
+          map.put(pq.poll(), "Gold Medal");
+      } else if (counter == 2) {
+          map.put(pq.poll(), "Silver Medal");
+      } else if (counter == 3) {
+          map.put(pq.poll(), "Bronze Medal");
+      } else {
+          map.put(pq.poll(), String.valueOf(counter));
+      }
+      counter++;
+  }
+  
+  String[] result = new String[score.length];
+  for (int i = 0; i < score.length; i++) {
+      result[i] = map.get(score[i]);
+  }
+  
+  return result;
+}
+
+// With priority queue with suitable comparator
+class Solution {
+    public String[] findRelativeRanks(int[] score) {
+        // Sort score indexes inside PriorityQueue by values in descending order
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> score[b] - score[a]);
+        for (int i = 0; i < score.length; i++) {
+            pq.offer(i);
         }
 
-        HashMap<Integer, String> map = new HashMap<>();
         int counter = 1;
+        String[] result = new String[score.length];
         while(!pq.isEmpty()) {
-            if (counter == 1) {
-                map.put(pq.poll(), "Gold Medal");
+            int index = pq.poll();
+            if (counter > 3) {
+                result[index] = Integer.toString(counter);
+            } else if (counter == 1) {
+                result[index] = "Gold Medal";
             } else if (counter == 2) {
-                map.put(pq.poll(), "Silver Medal");
+                result[index] = "Silver Medal";
             } else if (counter == 3) {
-                map.put(pq.poll(), "Bronze Medal");
-            } else {
-                map.put(pq.poll(), String.valueOf(counter));
+                result[index] = "Bronze Medal";
             }
             counter++;
         }
 
-        String[] result = new String[score.length];
-        for (int i = 0; i < score.length; i++) {
-            result[i] = map.get(score[i]);
-        }
-
         return result;
     }
+}
