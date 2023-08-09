@@ -41,6 +41,7 @@ class Solution {
 
         while (left <= right) {
             int mid = left + (right - left) / 2;
+            // Threat this non-decreasing 2d array as 1d array
             int midVal = matrix[mid / n][mid % n];
             if (midVal == target) {
                 return true;
