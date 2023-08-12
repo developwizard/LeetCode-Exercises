@@ -1,0 +1,72 @@
+/*
+  Task: Given the head of a linked list, rotate the list to the right by k places.
+Example 1:
+Input: head = [1,2,3,4,5], k = 2
+Output: [4,5,1,2,3]
+
+Example 2:
+Input: head = [0,1,2], k = 4
+Output: [2,0,1]
+
+Example 3:
+Input: head = [1,2,3,4,5], k = 2
+Output: [4,5,1,2,3]
+
+Example 4:
+Input: head = [1,2], k = 2
+Output: [1,2]
+*/
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+// With full reverse
+class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+        if (k == 0 || head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode prev = null;
+        ListNode curr = head;
+        int nodeCount = 0;
+        while (curr != null) {
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+            nodeCount++;
+        }
+
+        int countRotateToRight = k % nodeCount;
+        if (countRotateToRight > 0) {
+            curr = prev;
+            prev = null;
+            while(countRotateToRight > 0) {
+                prev = curr.next;
+                head.next = curr;
+                curr.next = null;
+                head = curr;
+                curr = prev;
+                countRotateToRight--;
+            }
+        }
+        curr = prev;
+        prev = null;
+        while (curr != null) {
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        return prev;
+    }
+}
